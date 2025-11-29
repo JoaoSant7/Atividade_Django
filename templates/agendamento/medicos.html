@@ -1,0 +1,28 @@
+{% extends 'agendamento/base.html' %}
+
+{% block content %}
+<h2>Nossa Equipe Médica</h2>
+
+<div class="row mt-4">
+    {% for medico in medicos %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ medico.nome }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ medico.especialidade }}</h6>
+                <p class="card-text">CRM: {{ medico.crm }}</p>
+                
+                <h6>Horários de Trabalho:</h6>
+                <ul>
+                    {% for horario in medico.horarios.all %}
+                    <li>{{ horario.get_dia_semana_display }}: {{ horario.hora_inicio }} - {{ horario.hora_fim }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <a href="{% url 'medico_detail' medico.id %}" class="btn btn-primary">Ver Disponibilidade</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

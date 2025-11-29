@@ -1,0 +1,35 @@
+{% extends 'agendamento/base.html' %}
+
+{% block content %}
+<h2>Todas as Consultas</h2>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Paciente</th>
+            <th>Médico</th>
+            <th>Data/Hora</th>
+            <th>Status</th>
+            <th>Observações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr>
+            <td>{{ consulta.paciente.nome }}</td>
+            <td>{{ consulta.medico.nome }}</td>
+            <td>{{ consulta.data_hora|date:"d/m/Y H:i" }}</td>
+            <td>
+                <span class="badge 
+                    {% if consulta.status == 'Agendada' %}bg-warning
+                    {% elif consulta.status == 'Realizada' %}bg-success
+                    {% else %}bg-danger{% endif %}">
+                    {{ consulta.status }}
+                </span>
+            </td>
+            <td>{{ consulta.observacoes|default:"-" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
