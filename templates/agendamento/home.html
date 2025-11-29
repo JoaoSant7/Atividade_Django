@@ -1,0 +1,62 @@
+{% extends 'agendamento/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Bem-vindo ao Sistema de Agendamento</h2>
+        <p class="lead">Agende suas consultas de forma rápida e fácil</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Médicos Disponíveis</h5>
+                        <p class="card-text">Veja nossa equipe médica e especialidades</p>
+                        <a href="{% url 'medicos_list' %}" class="btn btn-primary">Ver Médicos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Consultas</h5>
+                        <p class="card-text">Visualize todas as consultas agendadas</p>
+                        <a href="{% url 'consultas_list' %}" class="btn btn-primary">Ver Consultas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Próximas Consultas</h5>
+            </div>
+            <div class="card-body">
+                {% if proximas_consultas %}
+                    {% for consulta in proximas_consultas %}
+                    <div class="border-bottom py-2">
+                        <strong>{{ consulta.medico.nome }}</strong><br>
+                        <small>{{ consulta.data_hora|date:"d/m/Y H:i" }}</small><br>
+                        <span class="badge bg-success">{{ consulta.status }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">Nenhuma consulta agendada</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5>Estatísticas</h5>
+            </div>
+            <div class="card-body">
+                <p>Médicos cadastrados: <strong>{{ medicos|length }}</strong></p>
+                <p>Consultas agendadas: <strong>{{ proximas_consultas|length }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
